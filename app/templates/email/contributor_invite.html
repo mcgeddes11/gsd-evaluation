@@ -1,10 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width-device-width, initial-scale=1.0">
+        <title>You're Invited to Join the Blog</title>
+    </head>
+    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.5; color: #333333; background-color: #f5f5f5; padding:24px">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 32px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+            <h1 style="font-size: 28px; font-weight: 600; margin: 0 0 24px 0; color: #333333;">You're Invited!</h1>
 
-</body>
+            <p style="margin: 0 0 16px 0;">You've been invited to join as a {{ role | title }} on the blog. Click the link below to complete your registration.</p>
+
+            <div style="text-align: center; margin: 32px 0;">
+                <a href="{{ register_url }}" style="display: inline-block; background-color: #0070cc; color: #ffffff; padding: 12px 32px; border-radius: 4px; text-decoration: none; font-weight: 600;">Complete registration</a>
+            </div>
+
+            <p style="margin: 0 0 16px 0; font-size: 14px; color: #666666;">Or copy this link into your browser:</p>
+            <p style="margin: 0 0 24px 0; font-size: 14px; color: #0070cc; word-break: break-all;">{{ register_url }}</p>
+
+            <p style="margin: 0 0 16px 0; font-size: 14px; color: #666666;"><strong>This link expires in 24 hours.</strong> If it expires, contact your administrator for a new invite.</p>
+
+            <hr style="border: none; border-top: 1px solid #eeeeee; margin: 32px 0;">
+
+            <p style="margin: 0; font-size: 12px; color #999999; text-align: center;">This is an automated message, please do not reply</p>
+        </div>
+
+    </body>
 </html>

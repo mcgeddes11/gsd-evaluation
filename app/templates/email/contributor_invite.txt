@@ -1,0 +1,10 @@
+You're Invited!
+
+You've been invited to join as a {{ role | title }} on the blog. Click the link below to complete your registration.
+
+{{ register_url }}
+
+This link expires in 24 hours. If it expires, contact your administrator for a new invite.
+
+---
+This is an automated message from your blog admin. Please do not reply.
