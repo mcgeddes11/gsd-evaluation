@@ -1,10 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "public_base.html" %}
 
-</body>
-</html>
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+    {% if carousel_images %}
+        <div class="cloud-carousel" id="cloudCarousel">
+            <div class="cloud-carousel-track">
+                {% for img in carousel_images %}
+                    <div class="cloud-carousel-item">
+                        <img src="{{ img }}" alt="">
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="cloud-carousel-bt cloud-carousel-prev" aria-label="Previous">&#8249;</button>
+            <button class="cloud-carousel-bt cloud-carousel-next" aria-label="Next">&#8250;</button>
+        </div>
+    {% endif %}
+
+    <div class="public-search">
+        <form method="GET" action="{{ url_for('main.index') }}">
+            <input
+                type="text"
+                name="q"
+                class="public-search-input"
+                placeholder="Search posts..."
+                {% if search_query %}value="{{ search_query }}"{% endif %}
+                aria-label="Search posts"
+            >
+            <button type="submit" class="public-search-button">Search</button>
+        </form>
+    </div>
+
+    {% if posts_page.items %}
+        <div class="public-posts-container">
+            {% for post in posts_page.items %}
+                <article class="public-card">
+                    {% set cover_image = post.extract_cover_image(post.body) %}
+                    {% if cover_image %}
+                        <img
+                            src="{{ cover_image }}"
+                            alt="{{ post.title }}"
+                            class="public-card-image"
+                        >
+                    {% endif %}
+                    <div class="public-card-meta">
+                        <div class="public-card-byline">
+                            {% if post.author.avatar_filename %}
+                                <img
+                                    src="{{ url_for('main.serve_avatar', filename=post.author.avatar_filename) }}"
+                                    alt="{{ post.author.display_name }}"
+                                    class="public-card-avatar"
+                                >
+                            {% endif %}
+                            <div class="public-card-byline-text">
+                                <div class="public-card-author">{{ post.author.display_name }}</div>
+                                <div class="public-card-date">{% if post.published_at %}{{ post.published_at.strftime('%B %d, %Y') }}{% endif %}</div>
+                                <div class="public-card-read-time">{{ post.get-read_time(post.body) }}</div>
+                            </div>
+                        </div>
+                        <h2 class="public-card-title">
+                            <a href="{{ url_for('main.post_detail', slug=post.slug) }}">{{ post.title }}</a>
+                        </h2>
+                        <div class="public-card-excerpt">{{ post.excerpt_html|safe }}</div>
+                        <div class="public-card-views">{{ '{:,}'.format(post.view_count) }} views</div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+
+        {% if posts_page.pages > 1 %}
+            <div class="public-pagination">
+                <div class="public-pagination-info">
+                    Page {{ posts.page }} of {{ posts_page.pages }}
+                </div>
+                <div class="public-pagination-links">
+                    {% if posts_page.has_prev %}
+                        <a href="{{ url_for('main.index', page=posts_page.prev_num, q=search_query or '') }}" class="public-pagination-link">Previous</a>
+                    {% else %}
+                        <span class="public-pagination-link public-pagination-link-disabled">Previous</span>
+                    {% endif %}
+
+                    {% if posts_page.has_next %}
+                        <a href="{{ url_for('main.index', page=posts_page.next_num, q=search_query or '') }}" class="public-pagination-link">Next</a>
+                    {% else %}
+                        <span class="public-pagination-link public-pagination-link-disabled">Next</span>
+                    {% endif %}
+
+                </div>
+            </div>
+
+        {% endif %}
+    {% else %}
+        <div class="public-no-posts">
+            <p>No posts yet{% if search_query %} matching "{{ search_query }}"{% endif %}.</p>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+{% if carouse_images %}
+    <script>
+
+    </script>
+{% endif %}
+{% endblock %}
+
+
+
+
+
+
+

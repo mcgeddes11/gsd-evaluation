@@ -2,9 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{% block title %}Blog Admin{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
+    {% if current_user.is_authenticated %}
+    <header class="admin-header">
+        <div class="header-left">
+            <h1 class="site-title">Blog Admin</h1>
+        </div>
+        <div class="header-right">
+            <a href="{{ url_for('main.index') }}" class="nav-link">View Blog</a>
+            <a href="{{ url_for('admin.profile') }}" class="nav-link">Profile</a>
+            <span class="user-name">{{ current_user.email }}</span>
+            <form method="POST" action="{{ url_for('auth.logout') }}" style="display:inline;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" class="btn btn-secondary">Logout</button>
+            </form>
+        </div>
+    </header>
+    {% endif %}
+
+    <main class="main-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    {% if category == 'error' %}
+                        <div class="alert alert-error" role="alert" aria-live="polite">
+                            <span class="alert-icon">⚠️</span>
+                            <span class="alert-text">{{ message }}</span>
+                        </div>
+                    {% elif category == 'success' %}
+                        <div class="alert alert-success" role="alert" aria-live="polite">
+                            <span class="alert-icon">✓</span>
+                            <span class="alert-text">{{ message }}</span>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info" role="alert" aria-live="polite">
+                            <span class="alert-icon">ⓘ</span>
+                            <span class="alert-text">{{ message }}</span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
 
 </body>
 </html>

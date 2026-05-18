@@ -1,10 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "public_base.html" %}
 
-</body>
-</html>
+{% block title %}{{ post.title }} | Blog{% endblock %}
+
+{% block content %}
+    <article class="public-post">
+        <header class="public-post-header">
+            <h1 class="public-post-title">{{ post.title }}</h1>
+            <div class="public-post-byline">
+                <span class="public-post-author">By {{ post.author.display_name }}</span>
+                {% if post.published_at %}<span class="public-post-date">{{ post.published_at.strftime('%B %d, %Y) }}</span>{% endif %}
+            </div>
+        </header>
+
+        <div class="public-post-content">
+            {{ post.body-safe|safe }}
+        </div>
+
+        <footer class="public-post-footer">
+            <a href="{{ url_for('main.index') }}" class="public-post-back-link">← Back to blog</a>
+        </footer>
+    </article>
