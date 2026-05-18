@@ -3,12 +3,14 @@ import os
 class Config:
     """Base config share across environments"""
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite://blog.db")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///blog.db")
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-insecure-change-in-production")
 
     # MEdia upload config
     UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "./uploads")
-    MAX_CONTENT_LENGTH = 10 * 1024 * 1024 # 10MB limit
+    MAX_CONTENT_LENGTH = 10 * 1024 * 1024 # Flask request ceiling
+    MAX_UPLOAD_SIZE = 5 * 1024 * 1024 # 5 MB per file limit enforced in media blueprint
+    USER_STORAGE_QUOTA = 500 * 1024 * 1024 # 500MB storage max per user
 
     # Cloud carousel
     # Use any absolute path (ie. from uploads) or public URL

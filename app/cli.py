@@ -1,5 +1,5 @@
 import click
-import flask.cli
+from flask.cli import with_appcontext
 from app import db, bcrypt
 from app.models.user import User
 

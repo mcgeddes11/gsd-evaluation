@@ -10,7 +10,7 @@ class Post(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
-    slug = db.column(db.String(255), unique=True, nullable=False, index=True)
+    slug = db.Column(db.String(255), unique=True, nullable=False, index=True)
     body = db.Column(db.Text, nullable=False)
     status = db.Column(db.String(20), nullable=False, default='draft') # draft or published
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
@@ -20,7 +20,7 @@ class Post(db.Model):
     view_count = db.Column(db.Integer, nullable=False, default=0)
 
     # relationship to user
-    author = db.relationship('User', beckref=db.backref('posts', lazy='dynamic'))
+    author = db.relationship('User', backref=db.backref('posts', lazy='dynamic'))
 
     @property
     def body_safe(self):
