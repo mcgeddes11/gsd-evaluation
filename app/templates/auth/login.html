@@ -1,10 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}Sign In - Blog Admin{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <h1 class="login-title">Sign In</h1>
+
+        <form method="POST" class="login-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="form-group">
+                <label for="email">Email Address<abbr title="required">*</abbr></label>
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    required
+                    autofocus
+                    aria-describedby="email-help"
+                    class="form-input"
+                />
+                <small id="email-help" class="form-help">We'll send a password reset link here.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password<abbr title="required">*</abbr></label>
+                <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    required
+                    class="form-input"
+                />
+            </div>
+
+            <div class="form-group checkbox-group">
+                <input
+                    id="remember_me"
+                    type="checkbox"
+                    name="remember_me"
+                    value="on"
+                    />
+                <label for="remember_me" class="checkbox-label">Remember me</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full-width">Sign In</button>
+        </form>
+
+        <div class="login-footer">
+            <a href="{{ url_for('auth.forgot_password') }}" class="link-secondary">Forgot password?</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
