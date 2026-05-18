@@ -1,10 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}manage Accounts - Blog Admin{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <nav class="admin-sidebar">
+        <ul class="nav-list">
+            <li><a href="{{ url_for('admin.dashboard') }}" class="nav-link">Dashboard</a></li>
+            <li><a href="{{ url_for('posts.list_posts') }}" class="nav-link">Posts</a></li>
+            <li><a href="{{ url_for('media.list_media') }}" class="nav-link">Media</a></li>
+            <li><a href="{{ url_for('admin.accounts_list') }}" class="nav-link-active">Accounts</a></li>
+            <li><a href="{{ url_for('admin.invite_contributor') }}" class="nav-link">Invite Contributor</a></li>
+        </ul>
+    </nav>
+
+    <div class="admin-content">
+        <h1>Manage Accounts</h1>
+
+        {% if accounts.items %}
+            <table class="accounts-table">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Create</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in accounts.items %}
+                    <tr class="account-row">
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.role | title }}</td>
+                        <td>
+                            {% if user.is_active %}
+                                <span class="status-badge status-active">Active</span>
+                            {% else %}
+                                <span class="status-badge status-inactive">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ user.created_at.strftime('%Y-%m-%d') }}</td>
+                        <td class="account-actions">
+                            {% if user.id != current_user.id %}
+                                {% if user.is_active %}
+                                    <form method="POST" action="{{ url_for('admin.deactivate_account', user_id=user.id) }}" style="display:inline;">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn btn-small btn-destructive" onclick="return confirm('Deactivate {{ user.email }}?')">Deactivate</button>
+                                    </form>
+                                {% else %}
+                                    <form method="POST" action="{{ url_for('admin.reactivate_account', user_id=user.id) }}" style="display:inline;">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn btn-small" onclick="return confirm('Deactivate {{ user.email }}?')">Reactivate</button>
+                                    </form>
+                                {% endif %}
+
+                                {% if user.role != 'admin' %}
+                                    <form method="POST" action="{{ url_for('admin.delete_account', user_id=user.id) }}" style="display:inline;">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn btn-small btn-destructive" onclick="return confirm('Delete {{ user.email }}? This cannot be undone.')">Delete</button>
+                                    </form>
+                                {% endif %}
+                            {% else %}
+                                <span style="color: #999999;">Current User</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                {% if accounts.has_prev %}
+                    <a href="{{ url_for('admin.accounts_list', page=accounts.prev_num) }}" class="btn btn-secondary">Previous</a>
+                {% endif %}
+                <span style="padding: 8px 12px;">Page {{ accounts.page }} of {{ accounts.pages }}</span>
+                {% if accounts.has_next %}
+                    <a href="{{ url_for('admin.accounts_list', page=accounts.next_num) }}" class="btn btn-secondary">Next</a>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <h2>No Contributors</h2>
+                <p>Invite members to get started</p>
+                <a href="{{ url_for('admin.invite_contributor' }}" class="btn btn-primary">Invite Contributor</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

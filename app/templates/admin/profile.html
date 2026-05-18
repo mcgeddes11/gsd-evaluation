@@ -1,10 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}Profile - Blog Admin{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <nav class="admin-sidebar">
+        <ul class="nav-list">
+            {% if current_user.role == 'admin' %}
+                <li><a href="{{ url_for('admin.dashboard') }}" class="nav-link">Dashboard</a></li>
+            {% endif %}
+            <li><a href="{{ url_for('posts.list_posts') }}" class="nav-link">Posts</a></li>
+            <li><a href="{{ url_for('media.list_media') }}" class="nav-link">Media</a></li>
+            {% if current_user.role == 'admin' %}
+                <li><a href="{{ url_for('admin.accounts_list') }}" class="nav-link">Accounts</a></li>
+                <li><a href="{{ url_for('admin.invite_contributor') }}" class="nav-link">Invite Contributor</a></li>
+            {% endif %}
+            <li><a href="{{ url_for('admin.profile') }}" class="nav-link-active">Profile</a></li>
+        </ul>
+    </nav>
+
+    <div class="admin-content">
+        <h1>My Profile</h1>
+
+        <form method="POST" action="{{ url_for('admin.profile') }}" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            {% if current_user.avatar_filename %}
+                <div class="form-group">
+                    <label>Current Avatar</label>
+                    <div>
+                        <img src="{{ url_for('main.serve_avatr', filename=current_user.avatar_filename) }}"
+                             alt="Your avatar"
+                             style="width:80px;height=80px;object-fit:cover;border-radius:50%;display:block;margin-bottom:8px;">
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="avatar">Profile Picture</label>
+                <input type="file" id="avatar" name="avatar" accept="image/*">
+                <small class="form-help">JPG, PNG, GIF or WebP. Replaces current avatar.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" name="first_name" class="form-input"
+                       value="{{ current_user.first_name or '' }}" placeholder="First name">
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" name="last_name" class="form-input"
+                       value="{{ current_user.last_name or '' }}" placeholder="Last name">
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" class="form-input" value="{{ current_user.email }}" disabled>
+                <small class="form-help">Email cannot be changed here.</small>
+            </div>
+
+            <div style="margin-top: 24px;">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

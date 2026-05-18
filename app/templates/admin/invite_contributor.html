@@ -1,10 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}Invite Contributor - Blog Admin{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <nav class="admin-sidebar">
+        <ul class="nav-list">
+            <li><a href="{{ url_for('admin.dashboard') }}" class="nav-link">Dashboard</a></li>
+            <li><a href="{{ url_for('posts.list_posts') }}" class="nav-link">Posts</a></li>
+            <li><a href="{{ url_for('media.list_media') }}" class="nav-link">Media</a></li>
+            <li><a href="{{ url_for('admin.accounts_list') }}" class="nav-link">Accounts</a></li>
+            <li><a href="{{ url_for('admin.invite_contributor') }}" class="nav-link-active">Invite Contributor</a></li>
+        </ul>
+    </nav>
+
+    <div class="admin-content">
+        <h1>Invite Contributor</h1>
+
+        <form method="POST" class="form-section">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="form-group">
+                <label for="email">Email address<abbr title="required">*</abbr></label>
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    required
+                    autofocus
+                    class="form-input"
+                />
+                <small class="form-help">Email address of the person you wish to invite</small>
+            </div>
+
+            <div class="form-group">
+                <label for="role">Role<abbr title="required">*</abbr></label>
+                <select id="role" name="role" class="form-input" required>
+                    <option value="contributor">Contributor</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Send Invite</button>
+        </form>
+
+        <div class="info-box">
+            <h3>How invites work</h3>
+            <ul>
+                <li>The recipient receives an invite with a registration link</li>
+                <li>Link expires in 24 hours</li>
+                <li>They set their password and active their account</li>
+                <li>Admins can manage accounts, deactivate and delete as needed</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

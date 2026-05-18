@@ -1,0 +1,7 @@
+- Some weird design decisions e.g. different styles
+- Didn't remove old code
+- Didn't extract magic numbers into variabes and they varired across the code base
+- Repeated itself in a bunch of places including create/edit workflows and across a bunch of templates
+- Generally the templating was pretty bad, lots of repeated code
+- Duplicated logic across several pieces of functionality
+- 
