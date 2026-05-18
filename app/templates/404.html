@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "public_base.html" %}
+
+{% block title %}Page not found{% endblock %}
+
+{% block content %}
+    <div class="public-error-page">
+        <div class="public-error-content">
+            <h1 class="public-error-code">404</h1>
+            <p class="public-error-message">Post not found</p>
+            <p class="public-error-description>">The post you are looking for doesn't exist or may have been removed</p>
+            <a href="{{ url_for('main.index') }}" class="public-error-link">Back to blog</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,10 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <title>{% block title %}Blog Template{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    {% block extra_css %}{% endblock}
 </head>
 <body>
-$END$
+    <header class="public-header">
+        <h1 class="public-site-title">Blog Template</h1>
+        <nav class="public-header-nav">
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('posts.list_posts') }}" class="public-header-nav-link">Admin</a>
+            <form method="POST" action="{{ url_for('auth.logout') }}" style="display:inline;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <button type="submit" class="public-header-nav-link public-header-nav-button">Log out</button>
+            </form>
+            {% else %}
+                <a href="{{ url_for('auth.login') }}" class="public-header-nav-link">Log in</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="public-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="public-footer">
+        <p class="public-footer-text">A simple, clean blog space</p>
+    </footer>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>
