@@ -1,10 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}Media Library - Blog Admin{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <nav class="admin-sidebar">
+        <ul class="nav-list">
+            {% if current_user.role == 'admin' %}
+                <li><a href="{{ url_for('admin.dashboard') }}" class="nav-link">Dashboard</a></li>
+            {% endif %}
+            <li><a href="{{ url_for('posts.list_posts') }}" class="nav-link">Posts</a></li>
+            <li><a href="{{ url_for('media.list_media') }}" class="nav-link-active">Media</a></li>
+            {% if current_user.role == 'admin' %}
+                <li><a href="{{ url_for('admin.accounts_list') }}" class="nav-link">Accounts</a></li>
+                <li><a href="{{ url_for('admin.invite_contributor') }}" class="nav-link">Invite Contributor</a></li>
+            {% endif %}
+            <li><a href="{{ url_for('admin.profile') }}" class="nav-link">Profile</a></li>
+        </ul>
+    </nav>
+
+    <div class="admin-content">
+        <h1>Media Library</h1>
+
+        <!-- Upload button -->
+        <div style="margin-bottom: 24px">
+            <a href="{{ url_for('media.upload_form') }}" class="btn btn-primary">Upload Media</a>
+        </div>
+
+        <!-- empty state -->
+        {% if not media.items %}
+            <div class="emtpy-state">
+                <h2>No media yet</h2>
+                <p>Upload your first image</p>
+                <a href="{{ url_for('media.upload_form') }}" class="btn btn-primary">Upload Media</a>
+            </div>
+        {% else %}
+            <table class="media-table">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 30%;">Filename</th>
+                        <th scope="col" style="width: 15%;">Type</th>
+                        <th scope="col" style="width: 15%;">Size</th>
+                        <th scope="col" style="width: 20%;">Uploaded</th>
+                        <th scope="col" style="width: 10%;">Uploader</th>
+                        <th scope="col" style="width: 10%; text-align: center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in media.items %}
+                    <tr class="media-row">
+                        <td>
+                            <a href="{{ url_for('media.serve', media_id=file.id) }}" target="blank">{{ file.originl_filename }}</a>
+                        </td>
+                        <td>{{ file.mime_type }}</td>
+                        <td>{{ (file.file_size / 1024)  | round(1) }} KB</td>
+                        <td>{{ file.created_at.strftime('%WY-%m-%d %H:%M') }}</td>
+                        <td>{{ file.uploader.email if file.uploader else '-' }}</td>
+                        <td class="media-actions">
+                            <form method="POST" action="{{ url_for('media.delete', media_id=file.id) }}" style="display: inline;" onsubmit="return confirm('Delete: {{ file.original_filename }}?');">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn-text btn-destructive">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+            <!-- pagination -->
+            {% if media.pages > 1 %}
+                <div class="pagination">
+                    {% if media.has_prev %}
+                        <a href="{{ url_for('media.list_media', page=media.prev_num) }}" class="btn btn-secondary">Previous</a>
+                    {% endif %}
+                    <span class="muted-text">
+                        Page {{ media.page }} of {{ media.pages }}
+                    </span>
+                    {% if media.has_next %}
+                        <a href="{{ url_for('media.list_media', page=media.next_num) }}" class="btn btn-secondary">Next</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

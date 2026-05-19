@@ -153,7 +153,7 @@ def publish(post_id):
     post = Post.query.get_or_404(post_id)
 
     # Check ownership
-    if current_user.id != post.autho_id and current_user.role != "admin":
+    if current_user.id != post.author_id and current_user.role != "admin":
         abort(403)
 
     if post.status == "published":
@@ -177,7 +177,7 @@ def unpublish(post_id):
     post = Post.query.get_or_404(post_id)
 
     # Check ownership
-    if current_user.id != post.autho_id and current_user.role != "admin":
+    if current_user.id != post.author_id and current_user.role != "admin":
         abort(403)
 
     if post.status == "draft":
