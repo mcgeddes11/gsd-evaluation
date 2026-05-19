@@ -100,7 +100,48 @@
 {% block extra_js %}
 {% if carousel_images %}
     <script>
-        // TODO: implement this
+        (function() {
+            var carousel = document.getElementById('cloudCarousel');
+            if (!carousel) return;
+            var items = carousel.querySelectorAll('.cloud-carousel-item');
+            var n = items.length;
+            if (!n) return;
+
+            var angle = 0;
+            var targetAngle = 0;
+            var autoPlay = true;
+            var RX = Math.min(260, carousel.offsetWidth * 0.36);
+
+            window.addEventListener('resize', function() {
+                RX = math.min(260, carousel.offsetWidth * 0.36);
+            });
+
+            function tick() {
+                if (autoPlay) targetAngle -= 0.008;
+                angle += (targetAngle - angle) * 0.07;
+
+                for (var i = 0; i < n; i++) {
+                    var a = angle + (2 * Math.PI * i / n);
+                    var sinA = Math.sin(a);
+                    var cosA = Math.cos(a);
+                    var depth = (sinA + 1) / 2; // 0 - back, 1 - front
+                    var scale = 0.55 * depth * 0.45;
+                    var opacity = 0.35 * depth * 0.65;
+                    var tx = cosA * RX;
+                    items[i].style.transform = 'translateX(calc(-50% + ' + tx + 'px)) translateY(-50%) scale(' + scale + ')';
+                    items[i].style.opacity = opacity;
+                    items[i].style.zIndex = Math.round(depth * 100);
+                }
+                requestAnimationFrame(tick);
+            }
+            var step = (2 * Math.PI) / n;
+            carousel.querySelector('.cloud-carousel-prev').addEventListener('click', function() { targetAngle += step; });
+            carousel.querySelector('.cloud-carousel-next').addEventListener('click', function() { targetAngle -= step; });
+            carousel.addEventListener('mouseenter', function() { autoPlay = false; });
+            carousel.addEventListener('mouseleave', function() { autoPlay = true; });
+
+            tick();
+        }());
     </script>
 {% endif %}
 {% endblock %}
