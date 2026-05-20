@@ -1,0 +1,41 @@
+[Unit]
+Description=blog-service Flask Application (gunicorn)
+After=network.target
+
+[Service]
+# Run as dedicated blog system user
+User=blog
+Group=blog
+
+# Working directory
+WorkingDirectory=/opt/blog
+
+# Environment setup
+Environment="FLASK_ENV=production"
+EnvironmentFile=/opt/blog/.env
+
+# Gunicorn configuration
+# - Bind to localhost:8000 only (nginx reverse proxies public traffic)
+# - Use 2 workers (sufficient for Raspberry Pi, adjust upward for Zorin or other OS)
+# - Timeout 30 seconds (allow long requests to complete)
+ExecStart=/opt/blog/venv/bin/gunicorn \
+    --bind 127.0.0.1:8000 \
+    --workers 2 \
+    --worker-class sync \
+    --timeout 30 \
+    --access-logfile - \
+    --error-logfile - \
+    wsgi:app
+
+# Restart behaviour
+Restart=always
+RestartSec=5
+
+# Process isolation
+PrivateTmp=yes
+NoNewPrivileges=yes
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=blog-service
