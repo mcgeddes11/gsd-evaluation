@@ -57,7 +57,7 @@ def deactivate_account(user_id):
     flash(f'Account {user.email} has been deactivated', "success")
     return redirect(url_for("admin.accounts_list"))
 
-@admin_bp.route('/accounts/<int:user_id>/deactivate', methods=["POST"])
+@admin_bp.route('/accounts/<int:user_id>/reactivate', methods=["POST"])
 @login_required
 @admin_required
 def reactivate_account(user_id):

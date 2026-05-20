@@ -33,7 +33,7 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = "sqlite://:memory:"
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
     MAIL_SUPPRESS_SEND = True
     WTF_CSRF_ENABLED = False # Disable csrf in tests
 

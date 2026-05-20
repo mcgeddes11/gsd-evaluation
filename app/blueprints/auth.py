@@ -22,7 +22,7 @@ def login():
     """Handle user login with email and password"""
 
     if current_user.is_authenticated:
-        if current_user.user_role == 'admin':
+        if current_user.role == 'admin':
             return redirect(url_for('admin.dashboard'))
         return redirect(url_for('posts.list_posts'))
 
@@ -33,14 +33,14 @@ def login():
 
         # Validate input
         if not email or not password:
-            flash("Email and password required", "error")
+            flash("Email and password are required", "error")
             return redirect(url_for('auth.login'))
 
         user = User.query.filter_by(email=email).first()
 
         # Verify credentials
         if not user or not user.check_password(password):
-            flash("Invalid username or password, please try again", "error")
+            flash("Invalid email or password, please try again", "error")
             return redirect(url_for('auth.login'))
 
         # check account active
