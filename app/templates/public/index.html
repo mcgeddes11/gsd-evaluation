@@ -55,7 +55,7 @@
                             <div class="public-card-byline-text">
                                 <div class="public-card-author">{{ post.author.display_name }}</div>
                                 <div class="public-card-date">{% if post.published_at %}{{ post.published_at.strftime('%B %d, %Y') }}{% endif %}</div>
-                                <div class="public-card-read-time">{{ post.get-read_time(post.body) }}</div>
+                                <div class="public-card-read-time">{{ post.get_read_time(post.body) }}</div>
                             </div>
                         </div>
                         <h2 class="public-card-title">

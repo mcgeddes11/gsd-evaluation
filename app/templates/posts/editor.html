@@ -31,7 +31,7 @@
 
     <h1>{% if post %}Edit: {{ post.title }}{% else %}Create New Post{% endif %}</h1>
 
-    <form class="post-editor-form" method="POST" action="{% if post %}/admin/posts/{{ post.id }}/edit/{% else %}/admin/posts/create{% endif %}">
+    <form class="post-editor-form" method="POST" action="{% if post %}/admin/posts/{{ post.id }}/edit{% else %}/admin/posts/create{% endif %}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <!-- title -->
         <div class="form-group">

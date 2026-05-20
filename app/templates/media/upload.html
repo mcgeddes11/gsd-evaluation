@@ -55,9 +55,9 @@
 document.getElementById('media-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    const fileInput = document.getElementbyId('file');
-    const statusDiv = document.getElementbyId('upload-status');
-    const statusMessage = document.getElementbyId('status-message');
+    const fileInput = document.getElementById('file');
+    const statusDiv = document.getElementById('upload-status');
+    const statusMessage = document.getElementById('status-message');
 
     if (!fileInput.files.length) {
         statusMessage.textContent = 'Please select a file';
@@ -65,7 +65,7 @@ document.getElementById('media-form').addEventListener('submit', function(e) {
         return;
     }
 
-    const file = fileInput.files[0]
+    const file = fileInput.files[0];
     if (file.size > 5 * 1024 * 1024) {
         statusMessage.textContent = 'File exceeds 5MB limit. Please choose a smaller file';
         statusMessage.style.color = 'red';
@@ -75,7 +75,7 @@ document.getElementById('media-form').addEventListener('submit', function(e) {
     statusMessage.textContent = 'Uploading...';
     statusMessage.style.color = 'blue';
 
-    fetch(this.action, { method: 'POST, body: new FormData(this) })
+    fetch(this.action, { method: 'POST', body: new FormData(this) })
         .then(r => r.json())
         .then(data => {
             if (data.success) {
@@ -94,13 +94,13 @@ document.getElementById('media-form').addEventListener('submit', function(e) {
 // File size validation in real time
 document.getElementById('file').addEventListener('change', function(e) {
     const file = e.target.files[0];
-    const statusDiv = document.getElementById('upload_status');
+    const statusDiv = document.getElementById('upload-status');
     const statusMessage = document.getElementById('status-message');
     if (file && file.size > 5 * 1024 * 1024) {
         statusDiv.style.display = 'block';
         statusMessage.textContent = 'File exceeds 5MB limit. Please choose a smaller file';
         statusMessage.style.color = 'red';
-        e.target.value = ''
+        e.target.value = '';
     } else {
         statusDiv.style.display = 'none';
     }

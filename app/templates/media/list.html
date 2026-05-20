@@ -50,11 +50,11 @@
                     {% for file in media.items %}
                     <tr class="media-row">
                         <td>
-                            <a href="{{ url_for('media.serve', media_id=file.id) }}" target="blank">{{ file.originl_filename }}</a>
+                            <a href="{{ url_for('media.serve', media_id=file.id) }}" target="blank">{{ file.original_filename }}</a>
                         </td>
                         <td>{{ file.mime_type }}</td>
                         <td>{{ (file.file_size / 1024)  | round(1) }} KB</td>
-                        <td>{{ file.created_at.strftime('%WY-%m-%d %H:%M') }}</td>
+                        <td>{{ file.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
                         <td>{{ file.uploader.email if file.uploader else '-' }}</td>
                         <td class="media-actions">
                             <form method="POST" action="{{ url_for('media.delete', media_id=file.id) }}" style="display: inline;" onsubmit="return confirm('Delete: {{ file.original_filename }}?');">

@@ -48,4 +48,4 @@ def post_detail(slug):
         post.view_count += 1
         db.session.commit()
 
-    return render_template('pubic/post.html', post=post)
+    return render_template('public/post.html', post=post)

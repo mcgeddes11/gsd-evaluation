@@ -51,7 +51,7 @@ class Post(db.Model):
         return f'<p>{html.escape(" ".join(words[:35]))}...</p>'
 
     @staticmethod
-    def extract_cover_image(self, body_html):
+    def extract_cover_image(body_html):
         """
         Extract first image source from body
 

@@ -8,12 +8,13 @@
             <h1 class="public-post-title">{{ post.title }}</h1>
             <div class="public-post-byline">
                 <span class="public-post-author">By {{ post.author.display_name }}</span>
-                {% if post.published_at %}<span class="public-post-date">{{ post.published_at.strftime('%B %d, %Y) }}</span>{% endif %}
+                {% if post.published_at %}<span class="public-post-date">{{ post.published_at.strftime('%B %d, %Y') }}</span>{% endif %}
+                <span class="public-post-read-time">{{ post.get_read_time(post.body) }}</span>
             </div>
         </header>
 
         <div class="public-post-content">
-            {{ post.body-safe|safe }}
+            {{ post.body_safe|safe }}
         </div>
 
         <footer class="public-post-footer">
