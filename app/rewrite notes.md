@@ -4,4 +4,4 @@
 - Repeated itself in a bunch of places including create/edit workflows and across a bunch of templates
 - Generally the templating was pretty bad, lots of repeated code
 - Duplicated logic across several pieces of functionality
-- 
+- Bunch of tests were insufficient (lots of repeated functionality with more sophisticated names)

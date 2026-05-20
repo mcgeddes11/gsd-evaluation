@@ -40,7 +40,7 @@ class Post(db.Model):
         inner = match.group(1) if match else re.sub(r'[^>]+>','',safe).strip()
 
         # strip inline html tags and normalize whitespace
-        plain = ' '.join(html.unescape(re.sub(r'<[^>]+>','', inner)))
+        plain = ' '.join(html.unescape(re.sub(r'<[^>]+>','', inner)).split())
         if not plain:
             return ''
 
