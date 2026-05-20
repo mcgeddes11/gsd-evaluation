@@ -13,7 +13,7 @@
             {% if current_user.role == 'admin' %}
                 <li><a href="{{ url_for('admin.dashboard') }}" class="nav-link">Dashboard</a></li>
             {% endif %}
-            <li><a href="{{ url_for('posts.list_posts') }}" class="nav-link-active">Posts</a></li>
+            <li><a href="{{ url_for('posts.list_posts') }}" class="nav-link active">Posts</a></li>
             <li><a href="{{ url_for('media.list_media') }}" class="nav-link">Media</a></li>
             {% if current_user.role == 'admin' %}
                 <li><a href="{{ url_for('admin.accounts_list') }}" class="nav-link">Accounts</a></li>
@@ -27,58 +27,59 @@
         <div style="margin-bottom: 16px;">
             <a href="{{ url_for('posts.list_posts') }}" class="link-secondary">Back to posts</a>
         </div>
-    </div>
 
-    <h1>{% if post %}Edit: {{ post.title }}{% else %}Create New Post{% endif %}</h1>
 
-    <form class="post-editor-form" method="POST" action="{% if post %}/admin/posts/{{ post.id }}/edit{% else %}/admin/posts/create{% endif %}">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <!-- title -->
-        <div class="form-group">
-            <label for="post-title">Post Title <abbr title="required">*</abbr></label>
-            <input
-                id="post-title"
-                name="title"
-                type="text"
-                required
-                class="form-input"
-                value="{{ post.title if post else '' }}"
-                placeholder="Enter post title"
-            />
-        </div>
+        <h1>{% if post %}Edit: {{ post.title }}{% else %}Create New Post{% endif %}</h1>
 
-        <!-- slug -->
-        <div class="form-group">
-            <label for="post-slug">Slug</label>
-            <input
-                id="post-slug"
-                name="slug"
-                type="text"
-                class="form-input"
-                value="{{ post.slug if post else '' }}"
-                placeholder="auto-generated"
-            />
-            <small class="form-help">Auto-generated from title. Change to customize URL</small>
-        </div>
-
-        <!-- Quill editor -->
-        <div class="form-group">
-            <label class="editor-label">Content <abbr title="required">*</abbr></label>
-            <div id="quill-editor" class="quill-editor"></div>
-            <textarea id="post-body" name="body" style="display: none;">{{ post.body if post else '' }}</textarea>
-        </div>
-
-        <input type="hidden" name="status" id="form-status" value="draft">
-
-        <!-- Editor actions -->
-        <div class="editor-actions">
-            <a href="{{ url_for('posts.list_posts') }}" class="link-secondary">Discard changes</a>
-            <div class="button-group">
-                <button type="button" class="btn btn-secondary" id="save-draft-btn">Save Draft</button>
-                <button type="submit" class="btn btn-primary" id="publish-btn">Publish</button>
+        <form class="post-editor-form" method="POST" action="{% if post %}/admin/posts/{{ post.id }}/edit{% else %}/admin/posts/create{% endif %}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <!-- title -->
+            <div class="form-group">
+                <label for="post-title">Post Title <abbr title="required">*</abbr></label>
+                <input
+                    id="post-title"
+                    name="title"
+                    type="text"
+                    required
+                    class="form-input"
+                    value="{{ post.title if post else '' }}"
+                    placeholder="Enter post title"
+                />
             </div>
-        </div>
-    </form>
+
+            <!-- slug -->
+            <div class="form-group">
+                <label for="post-slug">Slug</label>
+                <input
+                    id="post-slug"
+                    name="slug"
+                    type="text"
+                    class="form-input"
+                    value="{{ post.slug if post else '' }}"
+                    placeholder="auto-generated"
+                />
+                <small class="form-help">Auto-generated from title. Change to customize URL</small>
+            </div>
+
+            <!-- Quill editor -->
+            <div class="form-group">
+                <label class="editor-label">Content <abbr title="required">*</abbr></label>
+                <div id="quill-editor" class="quill-editor"></div>
+                <textarea id="post-body" name="body" style="display: none;">{{ post.body if post else '' }}</textarea>
+            </div>
+
+            <input type="hidden" name="status" id="form-status" value="draft">
+
+            <!-- Editor actions -->
+            <div class="editor-actions">
+                <a href="{{ url_for('posts.list_posts') }}" class="link-secondary">Discard changes</a>
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" id="save-draft-btn">Save Draft</button>
+                    <button type="submit" class="btn btn-primary" id="publish-btn">Publish</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
 

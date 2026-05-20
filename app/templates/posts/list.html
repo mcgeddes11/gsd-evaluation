@@ -9,13 +9,12 @@
             {% if current_user.role == 'admin' %}
                 <li><a href="{{ url_for('admin.dashboard') }}" class="nav-link">Dashboard</a></li>
             {% endif %}
-            <li><a href="{{ url_for('posts.list_posts') }}" class="nav-link-active">Posts</a></li>
+            <li><a href="{{ url_for('posts.list_posts') }}" class="nav-link active">Posts</a></li>
             <li><a href="{{ url_for('media.list_media') }}" class="nav-link">Media</a></li>
             {% if current_user.role == 'admin' %}
                 <li><a href="{{ url_for('admin.accounts_list') }}" class="nav-link">Accounts</a></li>
                 <li><a href="{{ url_for('admin.invite_contributor') }}" class="nav-link">Invite Contributor</a></li>
             {% endif %}
-            <li><a href="{{ url_for('admin.profile') }}" class="nav-link">Profile</a></li>
         </ul>
     </nav>
 

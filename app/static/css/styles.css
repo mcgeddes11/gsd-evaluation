@@ -903,7 +903,7 @@ info-box li {
     margin-bottom: 32px;
 }
 
-.public-searxh form {
+.public-search form {
     display: flex;
     gap: 8px;
 }
