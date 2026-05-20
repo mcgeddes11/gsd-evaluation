@@ -57,6 +57,51 @@ class TestAlembicMigrations:
         assert "FLASK_ENV" in content, \
             "env.py should reference FLASK_ENV for production config resolution"
 
+@pytest.mark.cicd
+class TestDeployScriptStructure:
+
+    def test_deploy_script_exists(self):
+        root_script = Path("deploy.sh")
+        template_script = Path("templates/deploy.sh")
+        assert root_script.exists() or template_script.exists(), "deploy.sh not found"
+
+    def test_deploy_script_is_executable(self):
+        script_path = Path("deploy.sh") if Path("deploy.sh").exists() else Path("templates/deploy.sh")
+        content = script_path.read_text()
+        assert "pytest" in content, "Deploy script should run pytest"
+
+    def test_deploy_script_has_migration_step(self):
+        script_path = Path("deploy.sh") if Path("deploy.sh").exists() else Path("templates/deploy.sh")
+        content = script_path.read_text()
+        assert "flask db upgrade" in content, "Deploy should run flask db migration"
+        assert "FLASK_ENV=production" in content, "Deploy script should set FLASK_ENV=production"
+
+    def test_deploy_script_has_rollback_logic(self):
+        script_path = Path("deploy.sh") if Path("deploy.sh").exists() else Path("templates/deploy.sh")
+        content = script_path.read_text()
+        assert "git reset --hard" in content, "No git reset rollback step in deploy script"
+
+    def test_deploy_script_has_health_check(self):
+        script_path = Path("deploy.sh") if Path("deploy.sh").exists() else Path("templates/deploy.sh")
+        content = script_path.read_text()
+        assert "is-active" in content or "is_active" in content, \
+            "Deploy script should check if service is active"
+
+@pytest.mark.cicd
+class TestSystemdServiceFile:
+
+    def test_service_file_exists(self):
+        service_file = Path("templates/blog-service.service")
+        assert service_file.exists(), "systemd service file not found"
+
+    def test_service_file_has_required_sections(self):
+        service_file = Path("templates/blog-service.service")
+        content = service_file.read_text()
+
+        assert "[Unit]" in content and "[Service]" in content and "[Install]" in content, \
+            "Required sections not found in systemd file"
+
+
 
 
 

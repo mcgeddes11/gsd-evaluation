@@ -100,8 +100,8 @@ def invite_contributor():
             flash("Invalid role", "error")
             return redirect(url_for('admin.invite_contributor'))
 
-        # Check user existts already
-        existing_user = User.query.filter_by(email=email)
+        # Check user exists already
+        existing_user = User.query.filter_by(email=email).first()
         if existing_user:
             flash(f'User {email} exists already", "error')
             return redirect(url_for('admin.invite_contributor'))
@@ -123,7 +123,7 @@ def invite_contributor():
         )
         mail.send(msg)
 
-        flash(f"Invitation send to {email}. They'll receive an email with a registration link", "success")
+        flash(f"Invitation sent to {email}. They'll receive an email with a registration link", "success")
         return redirect(url_for('admin.invite_contributor'))
     return render_template('admin/invite_contributor.html')
 

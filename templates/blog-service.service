@@ -39,3 +39,6 @@ NoNewPrivileges=yes
 StandardOutput=journal
 StandardError=journal
 SyslogIdentifier=blog-service
+
+[Install]
+WantedBy=multi-user.target
