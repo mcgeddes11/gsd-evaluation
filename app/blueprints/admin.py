@@ -143,7 +143,8 @@ def profile():
         if avatar and avatar.filename:
             ext = avatar.filename.rsplit(".", 1)[-1].lower() if "." in avatar.filename else ""
             if ext not in _AVATAR_ALLOWED:
-                flash(f"Avatar must be of format: {",".join(_AVATAR_ALLOWED)}", "error")
+                formats = ", ".join(_AVATAR_ALLOWED)
+                flash(f"Avatar must be of format: {formats}", "error")
                 return redirect(url_for("admin.profile"))
             upload_folder = os.path.abspath(current_app.config["UPLOAD_FOLDER"])
             os.makedirs(upload_folder, exist_ok=True)
