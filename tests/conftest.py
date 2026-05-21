@@ -1,17 +1,23 @@
 import pytest
+import tempfile
+import shutil
 from app import create_app, db
 from app.models.user import User
 
 @pytest.fixture
 def app():
     """create app for testing"""
+    tmp_upload_dir = tempfile.mkdtemp()
     app = create_app('TestingConfig')
+    app.config["UPLOAD_FOLDER"] = tmp_upload_dir
 
     with app.app_context():
         db.create_all()
         yield app
         db.session.remove()
         db.drop_all()
+
+    shutil.rmtree(tmp_upload_dir, ignore_errors=True)
 
 @pytest.fixture
 def client(app):

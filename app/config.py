@@ -40,6 +40,7 @@ class TestingConfig(Config):
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
     MAIL_SUPPRESS_SEND = True
     WTF_CSRF_ENABLED = False # Disable csrf in tests
+    UPLOAD_FOLDER = None
 
 class ProductionConfig(Config):
     DEBUG = False
