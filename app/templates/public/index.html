@@ -125,8 +125,8 @@
                     var sinA = Math.sin(a);
                     var cosA = Math.cos(a);
                     var depth = (sinA + 1) / 2; // 0 - back, 1 - front
-                    var scale = 0.55 * depth * 0.45;
-                    var opacity = 0.35 * depth * 0.65;
+                    var scale = 0.55 + depth * 0.45;
+                    var opacity = 0.35 + depth * 0.65;
                     var tx = cosA * RX;
                     items[i].style.transform = 'translateX(calc(-50% + ' + tx + 'px)) translateY(-50%) scale(' + scale + ')';
                     items[i].style.opacity = opacity;
