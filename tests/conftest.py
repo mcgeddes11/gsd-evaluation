@@ -49,7 +49,7 @@ def contributor_user(app):
         db.session.commit()
         contributor_id = contributor.id
     # Return as namedtuple for use outside of context
-    return UserStub(id=contributor, email='contributor@test.local', role='contributor')
+    return UserStub(id=contributor_id, email='contributor@test.local', role='contributor')
 
 @pytest.fixture
 def viewer_user(app):
