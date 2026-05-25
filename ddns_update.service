@@ -1,0 +1,15 @@
+[Unit]
+Description=GoDaddy DNS updater
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=pi
+WorkingDirectory=/path/to/gsd-test-blog
+EnvironmentFile=/path/to/gsd-test-blog/.env
+ExecStart=/path/to/venv/bin/python ddns_update.py
+Restart=on-failure
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target
