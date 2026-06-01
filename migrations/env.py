@@ -20,14 +20,13 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # Set slqalchemy url from app config, resolving sqlite paths to absolute
-app = create_app(os.getenv("FLASK_ENV", "development") + "Config")
+app = create_app(os.getenv("FLASK_ENV", "development").capitalize() + "Config")
 db_url = app.config["SQLALCHEMY_DATABASE_URI"]
 if db_url.startswith("sqlite:///") and not db_url.startswith("sqlite:////"):
     # Relative path - Flask resolves sqlite:///foo.db against the instance folder,
     # not the project root. Resolve it the same way so Alembic finds the right DB
     rel = db_url[len("sqlite:///"):]
     db_url = "sqlite:///" + os.path.join(app.instance_path, rel)
-config.set_main_option("sqlalchemy.url", db_url)
 target_metadata = db.metadata
 
 def run_migrations_offline() -> None:
@@ -44,12 +43,8 @@ def run_migrations_offline() -> None:
 
 def run_migrations_online() -> None:
     """Run migrations online mode (connect to an actual db)"""
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
-        prefix="sqlalchemy",
-        poolclass=pool.NullPool,
-    )
-
+    from sqlalchemy import create_engine
+    connectable = create_engine(db_url, poolclass=pool.NullPool)
     with connectable.connect() as connection:
         context.configure(connection=connection, target_metadata=target_metadata)
         with context.begin_transaction():

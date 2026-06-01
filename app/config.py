@@ -3,7 +3,7 @@ import os
 class Config:
     """Base config share across environments"""
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///blog.db")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:////app/instance/blog.db")
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-insecure-change-in-production")
 
     # MEdia upload config

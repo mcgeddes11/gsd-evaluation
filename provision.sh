@@ -115,7 +115,7 @@ APP_DIR="/srv/blog"
 mkdir -p "${APP_DIR}/data" "${APP_DIR}/uploads"
 ok "Directories created at ${APP_DIR}."
 
-# Step 3
+# Step 3: Clone repo
 echo -e "${BOLD}[3/8] Cloning repository...${NC}"
 if [[ -f "${APP_DIR}/wsgi.py" ]]; then
   ok "Repository already cloned"
@@ -154,7 +154,7 @@ docker compose up -d
 ok "Container built and started"
 
 # Step 6: Create admin account
-echo -e "${BOLD}[6/8] Building and starting blog container...${NC}"
+echo -e "${BOLD}[6/8] Create admin account...${NC}"
 docker compose exec blog flask create-admin
 ok "Admin account created."
 

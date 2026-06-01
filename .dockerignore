@@ -4,6 +4,7 @@ __pycache/
 *.pyo
 .env
 instance/
+data/
 uploads/
 blog.db
 .git/
