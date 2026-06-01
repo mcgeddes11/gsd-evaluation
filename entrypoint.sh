@@ -2,7 +2,7 @@
 set -e
 
 echo "Running database migrations..."
-flask db upgrade
+(cd migrations && alembic upgrade head)
 
 echo "Starting gunicorn..."
 exec gunicorn wsgi:app \

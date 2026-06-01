@@ -50,8 +50,9 @@ def create_app(config_class="DevelopmentConfig"):
     app.cli.add_command(create_admin_command)
 
     # Create tables on first startup
-    with app.app_context():
-        db.create_all()
+    # TODO: run 'alembic upgrade head' from migrations directory first before running locally
+    # with app.app_context():
+    #     db.create_all()
 
     return app
 
