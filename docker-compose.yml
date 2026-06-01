@@ -2,7 +2,7 @@ services:
   blog:
     build: .
     restart: unless-stopped
-    posts:
+    ports:
       - "127.0.0.1:5000:5000"
     env_file:
       - .env
