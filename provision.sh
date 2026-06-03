@@ -121,7 +121,9 @@ echo -e "${BOLD}[3/8] Cloning repository...${NC}"
 if [[ -f "${APP_DIR}/wsgi.py" ]]; then
   ok "Repository already cloned"
 else
-  git clone "$REPO_URL" "$APP_DIR"
+  git clone "$REPO_URL" /tmp/blog-repo
+  cp -a /tmp/blog-repo/. "$APP_DIR"
+  rm -rf /tmp/blog-repo
   ok "Repository cloned"
 fi
 
