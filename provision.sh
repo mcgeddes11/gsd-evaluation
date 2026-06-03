@@ -72,7 +72,7 @@ MAIL_DEFAULT_SENDER=$(prompt  "From address"  "noreply@${DOMAIN}")
 
 echo ""
 info "Generating SECRET_KEY..."
-SECRET_KEY=$(python -c "import secrets; print(secrets.token_hex(32))")
+SECRET_KEY=$(python3 -c "import secrets; print(secrets.token_hex(32))")
 ok "SECRET_KEY generated"
 
 echo ""
