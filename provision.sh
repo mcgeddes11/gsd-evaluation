@@ -158,7 +158,7 @@ ok "Container built and started"
 
 # Step 6: Create admin account
 echo -e "${BOLD}[6/8] Create admin account...${NC}"
-docker compose exec blog flask create-admin
+docker compose exec -it blog flask create-admin
 ok "Admin account created."
 
 # Step 7: Install and configure nginx
