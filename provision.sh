@@ -39,7 +39,7 @@ prompt() {
 
 prompt_secret() {
   local prompt_text="$1"
-  loval value
+  local value
   while true; do
     read -rsp "  ${prompt_text}: " value
     echo ""
@@ -51,7 +51,7 @@ prompt_secret() {
 
 # ===============================================
 echo ""
-echo -e "${BOLD}BLOG APPLICATION PROVISIONING"${NC}
+echo -e "${BOLD}BLOG APPLICATION PROVISIONING${NC}"
 echo ""
 echo "This script sets up the blog as s docker container on this server"
 echo "It is sage to re-run - completed steps are skipped"
@@ -88,6 +88,7 @@ else
   apt-get update -q
   apt-get install -y -q git
   ok "Git installed"
+fi
 
 # Docker
 if command -v docker &>/dev/null; then
