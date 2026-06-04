@@ -2,7 +2,7 @@ import os
 import sys
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config, pool
+from sqlalchemy import pool
 from alembic import context
 
 # Ensure project root is on system path
@@ -42,6 +42,7 @@ def run_migrations_offline() -> None:
         context.run_migrations()
 
 def run_migrations_online() -> None:
+    print(f"db url: {db_url}")
     """Run migrations online mode (connect to an actual db)"""
     from sqlalchemy import create_engine
     connectable = create_engine(db_url, poolclass=pool.NullPool)

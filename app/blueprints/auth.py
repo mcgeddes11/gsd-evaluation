@@ -151,7 +151,7 @@ def reset_password(token):
         flash("Password was updated successfully. Please sign in with your new password.", "success")
         return redirect(url_for("auth.login"))
 
-    return render_template("auth/reset_password", token=token)
+    return render_template("auth/reset_password.html", token=token)
 
 @auth_bp.route("/register/<token>", methods=["GET","POST"])
 def register(token):
