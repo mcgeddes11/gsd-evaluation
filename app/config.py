@@ -45,3 +45,4 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     DEBUG = False
     TESTING = False
+    PREFERRED_URL_SCHEME = 'https'

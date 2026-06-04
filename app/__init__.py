@@ -25,6 +25,10 @@ def create_app(config_class="DevelopmentConfig"):
     app = Flask(__name__)
     app.config.from_object(config)
 
+    # Trust proxy headers from nginx so flask generates https:// URLs
+    from werkzeug.middleware.proxy_fix import ProxyFix
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
+
     # Init extensions
     db.init_app(app)
     login_manager.init_app(app)
