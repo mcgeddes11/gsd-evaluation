@@ -74,7 +74,7 @@ def owner_or_admin_required(model_class):
 def list_posts():
     """list posts with pagination"""
     page = request.args.get('page', 1, type=int)
-    posts = Post.query.paginate(page=page, per_page=10)
+    posts = Post.query.order_by(Post.created_at.desc()).paginate(page=page, per_page=10)
     return render_template('posts/list.html', posts=posts)
 
 @posts_bp.route("/create", methods=["GET"])
