@@ -40,6 +40,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Image upload handler
     const imageHandler = function() {
+        const url = prompt('Insert image by URL (leave blank to upload a file):');
+        if (url && url.trim()){
+            const range = quill.getSelection() || { index: quill.getLength() };
+            quill.insertEmbed(range.index, 'image', url.trim());
+            quill.setSelection(range.index + 1);
+            return;
+        }
+
         const input = document.createElement('input');
         input.setAttribute('type', 'file');
         input.setAttribute('accept', 'image/*');

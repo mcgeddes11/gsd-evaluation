@@ -34,6 +34,7 @@ class DevelopmentConfig(Config):
     DEBUG = True
     TESTING = False
     MAIL_SUPPRESSED_SEND = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'blog.db')
 
 class TestingConfig(Config):
     TESTING = True
