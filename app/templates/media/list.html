@@ -56,7 +56,7 @@
                         <td>{{ file.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
                         <td>{{ file.uploader.email if file.uploader else '-' }}</td>
                         <td class="media-actions">
-                            <form method="POST" action="{{ url_for('media.delete', media_id=file.id) }}" style="display: inline;" onsubmit="return confirm('Delete: {{ file.original_filename }}?');">
+                            <form method="POST" action="{{ url_for('media.delete', media_id=file.id) }}" style="display: inline;">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                 <button type="submit" class="btn-text btn-destructive">Delete</button>
                             </form>

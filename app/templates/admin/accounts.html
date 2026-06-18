@@ -46,19 +46,19 @@
                                 {% if user.is_active %}
                                     <form method="POST" action="{{ url_for('admin.deactivate_account', user_id=user.id) }}" style="display:inline;">
                                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                        <button type="submit" class="btn btn-small btn-destructive" onclick="return confirm('Deactivate {{ user.email }}?')">Deactivate</button>
+                                        <button type="submit" class="btn btn-small btn-destructive">Deactivate</button>
                                     </form>
                                 {% else %}
                                     <form method="POST" action="{{ url_for('admin.reactivate_account', user_id=user.id) }}" style="display:inline;">
                                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                        <button type="submit" class="btn btn-small" onclick="return confirm('Deactivate {{ user.email }}?')">Reactivate</button>
+                                        <button type="submit" class="btn btn-small">Reactivate</button>
                                     </form>
                                 {% endif %}
 
                                 {% if user.role != 'admin' %}
                                     <form method="POST" action="{{ url_for('admin.delete_account', user_id=user.id) }}" style="display:inline;">
                                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                        <button type="submit" class="btn btn-small btn-destructive" onclick="return confirm('Delete {{ user.email }}? This cannot be undone.')">Delete</button>
+                                        <button type="submit" class="btn btn-small btn-destructive">Delete</button>
                                     </form>
                                 {% endif %}
                             {% else %}

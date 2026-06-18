@@ -70,17 +70,17 @@
                             {% if post.status == 'draft' %}
                                 <form method="POST" action="{{ url_for('posts.publish', post_id=post.id) }}" style="display: inline;">
                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                    <button type="submit" class="btn-text btn-primary" onclick="return confirm('Publish post: {[ post.title }}?'">Publish</button>
+                                    <button type="submit" class="btn-text btn-primary">Publish</button>
                                 </form>
                             {% else %}
                                 <form method="POST" action="{{ url_for('posts.unpublish', post_id=post.id) }}" style="display: inline;">
                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                    <button type="submit" class="btn-text btn-secondary" onclick="return confirm('Unpublish post: {[ post.title }}?'">Unpublish</button>
+                                    <button type="submit" class="btn-text btn-secondary">Unpublish</button>
                                 </form>
                             {% endif %}
                             <form method="POST" action="{{ url_for('posts.delete', post_id=post.id) }}" style="display: inline;">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                <button type="submit" class="btn-text btn-destructive" onclick="return confirm('Delete post: {[ post.title }}?'">Delete</button>
+                                <button type="submit" class="btn-text btn-destructive">Delete</button>
                             </form>
                         </td>
                     </tr>
