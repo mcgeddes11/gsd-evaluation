@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Blog Template{% endblock %}</title>
+    <title>{% block title %}Grumpy Old Nerd{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
     <header class="public-header">
-        <h1 class="public-site-title">Blog Template</h1>
+        <h1 class="public-site-title">Grumpy Old Nerd</h1>
         <nav class="public-header-nav">
             {% if current_user.is_authenticated %}
             <a href="{{ url_for('posts.list_posts') }}" class="public-header-nav-link">Admin</a>
