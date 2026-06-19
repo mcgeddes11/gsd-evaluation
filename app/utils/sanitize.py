@@ -1,7 +1,7 @@
 import nh3
 
 _ALLOWED_TAGS = {
-    "p", "br", "h1", "h2","h3"
+    "p", "br", "h1", "h2", "h3",
     "strong","em","u","s",
     "ul","ol","li",
     "blockquote","pre","code",
