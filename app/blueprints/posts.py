@@ -8,7 +8,6 @@ from app.utils.slugify import generate_slug, validate_slug
 from app.utils.sanitize import sanitize_html
 from functools import wraps
 from datetime import datetime
-from app.utils.sanitize import sanitize_html
 
 posts_bp = Blueprint('posts', __name__, url_prefix='/admin/posts')
 
@@ -39,7 +38,7 @@ def _apply_post_form(post, error_redirect):
         if post.id is not None:
             q = q.filter(Post.id != post.id)
         if q.first():
-            flash(f'A post with slug "{slug} already exists. Please choose a different slug/title.')
+            flash(f'A post with slug "{slug}" already exists. Please choose a different slug/title.')
             return redirect(error_redirect)
     post.title = title
     post.body = sanitize_html(body)
@@ -184,7 +183,6 @@ def unpublish(post_id):
         flash("Post is already draft", "info")
         return redirect(url_for("posts.list_posts"))
 
-    # Publish
     post.status = "draft"
     post.published_at = None
     db.session.commit()

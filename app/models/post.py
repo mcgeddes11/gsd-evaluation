@@ -36,7 +36,7 @@ class Post(db.Model):
         safe = self.body_safe
         if not safe:
             return ''
-        match = re.search(r'<[p^>]*>(.*?)</p>', safe, re.DOTALL | re.IGNORECASE)
+        match = re.search(r'<p[^>]*>(.*?)</p>', safe, re.DOTALL | re.IGNORECASE)
         inner = match.group(1) if match else re.sub(r'[^>]+>','',safe).strip()
 
         # strip inline html tags and normalize whitespace
@@ -75,7 +75,7 @@ class Post(db.Model):
 
     @staticmethod
     def get_read_time(body_text):
-        """Calculte estimated reading time from a body text"""
+        """Calculate estimated reading time from a body text"""
         if not body_text:
             return "1 minute read"
 
@@ -91,7 +91,7 @@ class Post(db.Model):
         return f"{read_time_minutes} min read"
 
     def __repr__(self):
-        return f'<Post {self.id}: {self.title}'
+        return f'<Post {self.id}: {self.title}>'
 
 
 

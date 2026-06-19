@@ -23,7 +23,7 @@ class User(UserMixin, db.Model):
         return ' '.join(parts) if parts else self.email
 
     def __repr__(self):
-        return f'<User {self.email}'
+        return f'<User {self.email}>'
 
     def set_password(self, password):
         from app import bcrypt
