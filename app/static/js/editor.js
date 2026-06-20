@@ -40,6 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Image upload handler
     const imageHandler = function() {
+        // capture selection before the file picker steals editor focus
+        const range = quill.getSelection() || { index: quill.getLength() - 1 };
 
         const input = document.createElement('input');
         input.setAttribute('type', 'file');
@@ -66,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success){
-                    const range = quill.getSelection();
                     quill.insertEmbed(range.index, 'image', data.url);
                     quill.setSelection(range.index + 1);
                 } else {
