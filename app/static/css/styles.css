@@ -763,6 +763,20 @@ info-box li {
     text-align: center;
 }
 
+.inline-date-form {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.date-input {
+    font-size: 13px;
+    padding: 3px 6px;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    color: #333333;
+}
+
 /* Muted text for empty states and helpers */
 .muted-text {
     color: #666666;

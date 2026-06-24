@@ -159,9 +159,9 @@ def publish(post_id):
         flash("Post is already published", "info")
         return redirect(url_for("posts.list_posts"))
 
-    # Publish
     post.status = "published"
-    post.published_at = datetime.utcnow()
+    if not post.published_at:
+        post.published_at = datetime.utcnow()
     db.session.commit()
 
     flash('Post published successfully', "success")
@@ -188,6 +188,32 @@ def unpublish(post_id):
     db.session.commit()
 
     flash('Post unpublished successfully', "success")
+    return redirect(url_for('posts.list_posts'))
+
+
+@posts_bp.route('/<int:post_id>/set-published-date', methods=["POST"])
+@login_required
+@contributor_or_admin_required_html
+def set_published_date(post_id):
+    """Manually set the published date on a published post"""
+    post = Post.query.get_or_404(post_id)
+
+    if current_user.id != post.author_id and current_user.role != "admin":
+        abort(403)
+
+    if post.status != "published":
+        flash("Can only set published date on a published post", "error")
+        return redirect(url_for('posts.list_posts'))
+
+    raw = request.form.get('published_at', '').strip()
+    try:
+        post.published_at = datetime.strptime(raw, '%Y-%m-%d')
+    except ValueError:
+        flash("Invalid date format", "error")
+        return redirect(url_for('posts.list_posts'))
+
+    db.session.commit()
+    flash(f'Published date updated to {post.published_at.strftime("%B %d, %Y")}', "success")
     return redirect(url_for('posts.list_posts'))
 
 

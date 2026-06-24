@@ -2,7 +2,7 @@
 
 ## Bugs
 
-### [BUG] Republishing a post resets published_at to now
+### ~~[BUG] Republishing a post resets published_at to now~~ ✓ DONE
 **File:** `app/blueprints/posts.py:164`
 The `/publish` route unconditionally sets `published_at = datetime.utcnow()` on every publish, even if the post was previously published. This causes republished posts to bubble to the top of the public feed.
 **Fix:** Guard with `if not post.published_at` (same pattern already used in `_apply_post_form`).
@@ -11,7 +11,7 @@ The `/publish` route unconditionally sets `published_at = datetime.utcnow()` on 
 
 ## Features
 
-### [FEATURE] Editable published date in admin post list
+### ~~[FEATURE] Editable published date in admin post list~~ ✓ DONE
 When migrating content, it would be useful to manually set the published date on a post so it appears in the correct position in the public feed rather than defaulting to the current date.
 **Scope:**
 - New route: `POST /<post_id>/set-published-date` (owner or admin only)
