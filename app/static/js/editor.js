@@ -147,6 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function syncBody() {
         bodyField.value = quill.root.innerHTML;
     }
+    window.syncBody = syncBody;
 
     // auto slug
     const titleInput = document.getElementById('post-title');

@@ -95,6 +95,10 @@ def create():
 
     db.session.add(post)
     db.session.commit()
+
+    if request.form.get('preview') == '1':
+        return redirect(url_for('posts.edit_form', post_id=post.id, preview='1'))
+
     flash(f'Post "{post.title}" created successfully', "success")
     return redirect(url_for('posts.list_posts'))
 
@@ -108,7 +112,8 @@ def edit_form(post_id):
     if post.status == "published":
         flash("Unpublish this post before editing", "error")
         return redirect(url_for('posts.list_posts'))
-    return render_template('posts/editor.html', post=post)
+    preview = request.args.get('preview') == '1'
+    return render_template('posts/editor.html', post=post, open_preview=preview)
 
 
 @posts_bp.route('/<int:post_id>/edit', methods=["POST"])
@@ -127,8 +132,22 @@ def edit(post_id):
         return err
 
     db.session.commit()
+
+    if request.form.get('preview') == '1':
+        return redirect(url_for('posts.edit_form', post_id=post.id, preview='1'))
+
     flash(f'Post "{post.title}" updated successfully.', "success")
     return redirect(url_for('posts.list_posts'))
+
+
+@posts_bp.route('/<int:post_id>/preview', methods=["GET"])
+@login_required
+@contributor_or_admin_required_html
+@owner_or_admin_required(Post)
+def preview(post_id):
+    """Render a draft post using the public template"""
+    post = Post.query.get_or_404(post_id)
+    return render_template('public/post.html', post=post)
 
 @posts_bp.route('/<int:post_id>/delete', methods=["POST"])
 @login_required

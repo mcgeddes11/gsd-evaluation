@@ -69,12 +69,14 @@
             </div>
 
             <input type="hidden" name="status" id="form-status" value="draft">
+            <input type="hidden" name="preview" id="form-preview" value="0">
 
             <!-- Editor actions -->
             <div class="editor-actions">
                 <a href="{{ url_for('posts.list_posts') }}" class="link-secondary">Discard changes</a>
                 <div class="button-group">
                     <button type="button" class="btn btn-secondary" id="save-draft-btn">Save Draft</button>
+                    <button type="button" class="btn btn-secondary" id="preview-btn">Preview</button>
                     <button type="submit" class="btn btn-primary" id="publish-btn">Publish</button>
                 </div>
             </div>
@@ -85,4 +87,21 @@
 
 <script src="{{ url_for('static', filename='js/quill.js') }}"></script>
 <script src="{{ url_for('static', filename='js/editor.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const previewBtn = document.getElementById('preview-btn');
+        if (previewBtn) {
+            previewBtn.addEventListener('click', function() {
+                syncBody();
+                document.getElementById('form-status').value = 'draft';
+                document.getElementById('form-preview').value = '1';
+                document.querySelector('.post-editor-form').submit();
+            });
+        }
+
+        {% if post and open_preview %}
+        window.open("{{ url_for('posts.preview', post_id=post.id) }}", '_blank');
+        {% endif %}
+    });
+</script>
 {% endblock %}

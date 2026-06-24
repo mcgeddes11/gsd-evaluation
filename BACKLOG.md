@@ -20,7 +20,7 @@ When migrating content, it would be useful to manually set the published date on
 
 **Depends on:** Bug fix above should be shipped first.
 
-### [FEATURE] Post preview for drafts
+### ~~[FEATURE] Post preview for drafts~~ ✓ DONE
 The Quill editor and the public post render use different base templates and CSS, making it hard to judge formatting before publishing. A preview should show the post exactly as the public would see it.
 **Scope:**
 - New route: `GET /admin/posts/<post_id>/preview` — renders the existing `public/post.html` template without requiring `status = "published"`, owner or admin only
