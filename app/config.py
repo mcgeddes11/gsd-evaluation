@@ -1,4 +1,7 @@
 import os
+from fileinput import filename
+
+from flask import url_for
 
 class Config:
     """Base config share across environments"""
@@ -15,11 +18,11 @@ class Config:
     # Cloud carousel
     # Use any absolute path (ie. from uploads) or public URL
     # Empty disables the feature
-    CAROUSEL_IMAGES = ["https://static.wixstatic.com/media/982b4a_b1043398e8af44e4b718d9a2f19443a6~mv2.jpg/v1/fill/w_407,h_198,al_c,q_80,usm_0.66_1.00_0.01/982b4a_b1043398e8af44e4b718d9a2f19443a6~mv2.jpg",
-                       "https://static.wixstatic.com/media/982b4a_fcdeee571f544c0abcc99f512e9458e8~mv2_d_2048_1536_s_2.jpg/v1/fill/w_407,h_305,al_c,q_80,usm_0.66_1.00_0.01/982b4a_fcdeee571f544c0abcc99f512e9458e8~mv2_d_2048_1536_s_2.jpg",
-                       "https://static.wixstatic.com/media/982b4a_118cf7bcc3374237b6df0b9d77b782ba~mv2_d_4288_2848_s_4_2.jpg/v1/fill/w_407,h_270,al_c,q_80,usm_0.66_1.00_0.01/982b4a_118cf7bcc3374237b6df0b9d77b782ba~mv2_d_4288_2848_s_4_2.jpg",
-                       "https://static.wixstatic.com/media/982b4a_26bb65d308ca4a2aad39563ee67ea287~mv2.jpg/v1/fill/w_407,h_325,al_c,q_80,usm_0.66_1.00_0.01/982b4a_26bb65d308ca4a2aad39563ee67ea287~mv2.jpg",
-                       "https://static.wixstatic.com/media/982b4a_f0ff80f6fd5a47d388533306ad539184~mv2_d_4896_2760_s_4_2.jpg/v1/fill/w_407,h_229,al_c,q_80,usm_0.66_1.00_0.01/982b4a_f0ff80f6fd5a47d388533306ad539184~mv2_d_4896_2760_s_4_2.jpg"]
+    CAROUSEL_IMAGES = ["https://blog.mcgeddes.com/admin/media/serve/147",
+                       "https://blog.mcgeddes.com/admin/media/serve/148",
+                       "https://blog.mcgeddes.com/admin/media/serve/149",
+                       "https://blog.mcgeddes.com/admin/media/serve/150",
+                       "https://blog.mcgeddes.com/admin/media/serve/151",]
 
     # Main config
     MAIL_SERVER = os.getenv("MAIL_SERVER", "smtp.gmail.com")
